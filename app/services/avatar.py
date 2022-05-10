@@ -3,10 +3,10 @@ from ..settings import MEDIA_URL
 
 def get_url(request):
     """ Создание url для получения файла """
-    if request.client.port:
-        url = f"{request.url.scheme}://{request.client.host}:{str(request.url.port)}/"
-    else:
-        url = f"{request.url.scheme}://{request.client.host}/"
+    # if request.client.port:
+    #     url = f"{request.url.scheme}://{request.client.host}:{str(request.url.port)}/"
+    # else:
+    url = f"{request.url.scheme}://{request.client.host}/"
     
     print(url)
     return url
