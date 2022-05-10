@@ -4,3 +4,4 @@ alembic.ini
 __pycache__
 */*/__pycache__/
 /app/settings.py
+base.txt
