@@ -40,5 +40,5 @@ class ValueUpdate(BaseModel): # Чисто пайдантик модель
     description: Optional[str] = None
     key: Optional[str] = None
     subkey: Optional[str] = None
-    value: Optional[str] = None
+    # value: Optional[str] = None
     # avatar: Optional[str] = None
