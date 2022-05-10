@@ -1,5 +1,5 @@
 
-from ..settings import MEDIA_URL
+from ..settings import MEDIA_URL, MY_URL
 
 def get_url(request):
     """ Создание url для получения файла """
@@ -14,22 +14,23 @@ def get_url(request):
 
 def change_avatar_url(request, user):
     """ Change avatar url  """
-    url = get_url(request) # Like a http://localhost:8000/ - текущий урл
+    # url = get_url(request) # Like a http://localhost:8000/ - текущий урл
+    # url = MY_URL
     # print(type(user))
     user_data = user.dict() # Преобразуем в дикт
     if user_data["avatar"]:
-        user_data["avatar"] = url + user_data["avatar"] # Добавляем урл к аватарке
+        user_data["avatar"] = MY_URL + user_data["avatar"] # Добавляем урл к аватарке
     return user_data
 
 
 def change_avatars_url(request, users):
     """ Change avatars url """
-    url = get_url(request) # Like a http://localhost:8000/ 
+    # url = get_url(request) # Like a http://localhost:8000/ 
     users_list = []
     # print(type(users))
     for user in users:
         user_data = user.dict() # Преобразуем в дикт
         if user_data["avatar"]:
-            user_data["avatar"] = url + user_data["avatar"] # Добавляем урл к аватарке
+            user_data["avatar"] = MY_URL + user_data["avatar"] # Добавляем урл к аватарке
         users_list.append(user_data)
     return users_list

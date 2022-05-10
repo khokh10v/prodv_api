@@ -25,6 +25,7 @@ SQLALCHEMY_DATABASE_URL = "postgresql://postgres:jujym@localhost/prodv"
 # ----------
 # Storage
 # ----------
+MY_URL="https://app.prodv.pro/"
 # 1. Путь по которому будут забирать файлы с NGINX
 MEDIA_URL = "media"
 
