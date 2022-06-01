@@ -23,9 +23,9 @@ app = FastAPI(
 
 
 # CORS политика
-origins = [
-    "http://localhost:4000",
-    "http://localhost:4000/api/users/me/",
+origins = [ '*'
+    # "http://localhost:4000",
+    # "http://localhost:4000/api/users/me/",
 ]
 app.add_middleware(
     CORSMiddleware,
