@@ -27,6 +27,8 @@ class Value(ValueBase, table=True):
 # --------------
 class ValueCreate(ValueBase):
     """ Создание JSON переменной """
+    # Сюда попадает id !!!
+    # Надо как то это убрать)
     pass
 
 

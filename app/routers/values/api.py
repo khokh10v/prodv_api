@@ -35,7 +35,7 @@ def create_value(*,
 # Read One Value
 # ---------------
 @value_router.get("/values/{value_id}", response_model=ValueRead)
-def read_user(*, 
+def read_value(*, 
         session: Session = Depends(get_session), 
         value_id: int,
         request: Request,
@@ -63,8 +63,10 @@ def read_values(*,
     ):
     query = select(Value)
     if key: # Filtring by key
+        print("Фильтруем по ключу")
         query = query.where(Value.key == key)
     if subkey: # Filtering by subkey
+        print("Фильтруем по подключу")
         query = query.where(Value.subkey == subkey)
     query = query.offset(offset).limit(limit) # Полюбому включаем
     values = session.exec(query).all()   
@@ -76,7 +78,7 @@ def read_values(*,
 # Update Avatar Value
 # ---------------
 @value_router.patch("/values/avatars/{value_id}")
-def update_user_avatar( 
+def update_value_avatar( 
         *,
         value_id: int, 
         file: UploadFile = File(...),
@@ -107,7 +109,7 @@ def update_user_avatar(
 @value_router.patch("/values/{value_id}"
     # , response_model=ValueUpdate
     )
-def update_user(*, # Будут вызываться как kwargs (Даже если не имеют значения по умолчанию)
+def update_value(*, # Будут вызываться как kwargs (Даже если не имеют значения по умолчанию)
         session: Session = Depends(get_session), 
         value_id: int, 
         value: ValueUpdate,
@@ -139,7 +141,7 @@ def update_user(*, # Будут вызываться как kwargs (Даже е�
 # Delete User
 # ---------------
 @value_router.delete("/values/{value_id}")
-def delete_user(*, session: Session = Depends(get_session), value_id: int):
+def delete_value(*, session: Session = Depends(get_session), value_id: int):
     value = session.get(Value, value_id)
     if not value:
         raise HTTPException(status_code=404, detail="value not found")

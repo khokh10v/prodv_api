@@ -62,7 +62,7 @@ def read_users( *,
         session: Session = Depends(get_session),
         offset: int = 0, limit: int = Query(default=100, lte=100),
         request: Request,
-        current_user: User = Depends(get_current_active_user)
+        # current_user: User = Depends(get_current_active_user)
     ):
     users = session.exec(select(User).offset(offset).limit(limit)).all()
     if not users:

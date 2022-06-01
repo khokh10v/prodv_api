@@ -6,6 +6,10 @@ from app.database.database import create_db_and_tables
 from app.routers.auth.api import auth_router # Авторизация
 from app.routers.users.api import user_router # Пользователи
 from app.routers.values.api import value_router # Пользователи
+from app.routers.posts.api import post_router
+from app.routers.posts.files.api import file_router
+from app.routers.posts.tags.api import tag_router
+from app.routers.posts.categorys.api import category_router
 from .settings import MEDIA_URL
 
 
@@ -47,6 +51,38 @@ app.add_middleware(
 # Это пути на диске где хранятся файлы
 # /Users/Desktop/prodv_api/media/values/avatars/3/101_value_avatar.jpg
 app.mount("/media", StaticFiles(directory=MEDIA_URL), name="media")
+
+
+# Категории
+app.include_router(
+    category_router,
+    prefix="/api",
+    tags=["Category"],
+    )
+
+
+# Теги
+app.include_router(
+    tag_router,
+    prefix="/api",
+    tags=["Tags"],
+    )
+
+
+# Файлы
+app.include_router(
+    file_router,
+    prefix="/api",
+    tags=["Files"],
+    )
+
+
+# Посты
+app.include_router(
+    post_router,
+    prefix="/api",
+    tags=["Posts"],
+    )
 
 
 # Авторизация  

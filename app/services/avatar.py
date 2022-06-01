@@ -34,3 +34,4 @@ def change_avatars_url(request, users):
             user_data["avatar"] = MY_URL + user_data["avatar"] # Добавляем урл к аватарке
         users_list.append(user_data)
     return users_list
+

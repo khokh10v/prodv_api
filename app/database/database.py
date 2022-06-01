@@ -22,6 +22,15 @@ from app.settings import SQLALCHEMY_DATABASE_URL
 #     $ alembic upgrade head
 #  8. Посмотреть все миграции
 #     $ alembic history
+#  9. Если миграция не понравилась то ее надо откатить
+#     $ alembic downgrade -1
+#     $ alembic downgrade 8ac14e223d1e
+# 10. Если downgrade не сраотал то надо 
+#     - удалить последнюю миграцию ( которая не даунгрейдится )
+#     - поправить в таблице alembic_versions номер нашей последней миграции
+#     - удалить папку __pycache__ в папке versions
+
+
 
 
 # Доступ к базе SQLite 
