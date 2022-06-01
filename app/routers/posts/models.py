@@ -9,7 +9,7 @@ from pydantic import BaseModel
 from app.routers.users.models import User
 from app.routers.posts.files.models import File 
 from app.routers.posts.tags.models import PostTagLink, Tag
-from app.routers.posts.categorys.models import Category
+from app.routers.posts.categorys.models import Category, CategoryUpdate
 
 
 class PostBase(SQLModel):
@@ -65,10 +65,12 @@ class PostCreate(BaseModel):
     # id: Optional[int]
     slug: str # Email *
     body: Optional[str]
-    author_id: int
-    class Config:
-        orm_mode = True
-        allow_population_by_field_name = True
+    author_id: Optional[int] = None
+    cover_id: Optional[int] = None
+    category_id: Optional[int] = None
+    # class Config:
+    #     orm_mode = True
+    #     allow_population_by_field_name = True
     # pass
 # class PostCreate(PostBase):
 #     """ Создание JSON поста """

@@ -31,6 +31,7 @@ def create_post_my(*,
     session.add(post)
     session.commit()
     session.refresh(post) # Установится уже новый Id пользователя
+    print(post)
     return post # Выдаем созданный пост
 
 
@@ -102,8 +103,8 @@ def read_posts(*,
 
     # Запрос к базе данных
     query = session.query(Post)
-    query = query.select_from(PostTagLink, Post).join(PostTagLink)
     if tags:
+        query = query.select_from(PostTagLink, Post).join(PostTagLink)
         query = query.filter(or_(*tags_filters))
     if category:
         query = query.filter(Post.category_id == category)
@@ -121,6 +122,12 @@ def read_posts(*,
         post_data["category"] = post.category # Добавляем категории
         posts_list.append(post_data)
     return posts_list
+
+
+
+
+
+
 
 
     # Всякий шлак старый - запросы в базу)))

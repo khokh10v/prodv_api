@@ -62,6 +62,7 @@ class UserCreate(BaseModel):
     email: EmailStr # Email *
     hashed_password: str # Пароль пользователя *
     first_name: str # Имя
+    tel: Optional[str] = None
     pass
 
 
