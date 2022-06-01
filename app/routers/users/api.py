@@ -31,10 +31,10 @@ def create_user(*,
     user.hashed_password = hash # Пользователю кладем только хеш
     print(user)
     # Вот тут ошибка с подготовкой записи в базу
-    # user.tel = f'no_tel_for__{user.email}' # Ну блин как костыль )))
+    user.tel = f'no_tel_for__{user.email}' # Ну блин как костыль ))) 
     # user.tel = None
     db_user = User.from_orm(user) # Подготовка для записи в базу
-    db_user.tel = None
+    db_user.tel = None # С костылем прошел через пайдантик и в Null
     session.add(db_user)
     session.commit()
     session.refresh(db_user) # Установится уже новый Id пользователя
