@@ -25,7 +25,7 @@ app = FastAPI(
 # CORS политика
 origins = [ 
     # '*',
-    "https://api.prodv.pro",
+    "https://app.prodv.pro",
     # "http://localhost:4000",
     # "http://localhost:4000/api/users/me/",
 ]
