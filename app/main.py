@@ -23,19 +23,19 @@ app = FastAPI(
 
 
 # CORS политика
-origins = [ '*',
-    "https://api.prodv.pro",
-    # "http://localhost:4000",
-    # "http://localhost:4000/api/users/me/",
-]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins, # Урлы с которых мы будем принимать запросы
-    allow_credentials=True, # Поддержка файлов Cookie для запросов cross-origin
-    allow_methods=["*"], # Методы для которых разрешены перекрестные запросы
-    allow_headers=["*"],
-    expose_headers=['Access-Control-Allow-Origin']
-)
+# origins = [ '*',
+#     "https://api.prodv.pro",
+#     # "http://localhost:4000",
+#     # "http://localhost:4000/api/users/me/",
+# ]
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins, # Урлы с которых мы будем принимать запросы
+#     allow_credentials=True, # Поддержка файлов Cookie для запросов cross-origin
+#     allow_methods=["*"], # Методы для которых разрешены перекрестные запросы
+#     allow_headers=["*"],
+#     expose_headers=['Access-Control-Allow-Origin']
+# )
 
 
 # Создание таблиц при запуске сервера
