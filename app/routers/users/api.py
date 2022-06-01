@@ -29,7 +29,12 @@ def create_user(*,
     hash = get_password_hash(user.hashed_password) # Хешируем пароль
     verify_password(user.hashed_password, hash) # Проверяем что норм захешировался
     user.hashed_password = hash # Пользователю кладем только хеш
+    print(user)
+    # Вот тут ошибка с подготовкой записи в базу
+    # user.tel = f'no_tel_for__{user.email}' # Ну блин как костыль )))
+    # user.tel = None
     db_user = User.from_orm(user) # Подготовка для записи в базу
+    db_user.tel = None
     session.add(db_user)
     session.commit()
     session.refresh(db_user) # Установится уже новый Id пользователя

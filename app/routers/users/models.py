@@ -53,6 +53,7 @@ class User(UserBase, table=True):
     posts: List["Post"] = Relationship(back_populates="author")
 
 
+
 # --------------
 # ---  CRUD  ---
 # --------------
@@ -63,7 +64,9 @@ class UserCreate(BaseModel):
     hashed_password: str # Пароль пользователя *
     first_name: str # Имя
     tel: Optional[str] = None
-    pass
+    # class Config:
+    #     orm_mode = True
+    #     # allow_population_by_field_name = True
 
 
 class UserRead(UserBase):
