@@ -4,7 +4,24 @@ import datetime
 from sqlmodel import SQLModel, Field, Column, VARCHAR, UniqueConstraint, Relationship
 from pydantic import BaseModel, EmailStr
 # Если раскоментарить то циклический импорт получится)
-# from app.routers.posts.models import Post
+# from app.routers.posts.models import UserPostLink
+
+
+# UserPostLink
+class UserPostLink(SQLModel, table=True):
+    # Удалять каскадом тоже надо
+    user_id: Optional[int] = Field(
+        default=None, nullable=False, foreign_key="user.id", primary_key=True
+    )
+    post_id: Optional[int] = Field(
+        default=None, nullable=False, foreign_key="post.id", primary_key=True
+    )
+    # Добавить поля для взаимотношений пользователя с постом
+    # Например прохождение поста - пользователь прочитал и ответил на вопросы
+    completed: bool = Field(default=False) # Выполнил ли задание
+    like: bool = Field(default=False) # Лайкнул пост
+    dislike: bool = Field(default=False) # Дислайкнул пост
+    bookmark: bool = Field(default=False) # Дислайкнул пост
 
 
 class UserBase(SQLModel):
@@ -51,6 +68,10 @@ class User(UserBase, table=True):
     id: Optional[int] = Field(default=None, nullable=False, primary_key=True)
     hashed_password: str = Field() # Для аутентификации
     posts: List["Post"] = Relationship(back_populates="author")
+
+
+    #tags: List[Tag] = Relationship(back_populates="posts", link_model=PostTagLink)
+    userpostlink_posts: List["Post"] = Relationship(back_populates="userpostlink_users", link_model=UserPostLink)
 
 
 

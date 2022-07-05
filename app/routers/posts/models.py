@@ -7,10 +7,11 @@ import datetime
 from sqlmodel import SQLModel, Field, Column, VARCHAR, TEXT, Relationship
 from pydantic import BaseModel
 from app.routers.users.models import User
+from app.routers.users.models import UserPostLink
 from app.routers.posts.files.models import File 
 from app.routers.posts.tags.models import PostTagLink, Tag
 from app.routers.posts.categorys.models import Category, CategoryUpdate
-
+   
 
 class PostBase(SQLModel):
     slug: str = Field( # ЧПУ страницы, по умолчанию nullable = True
@@ -36,6 +37,8 @@ class PostBase(SQLModel):
 
     # Post.category_id ----> Category.id
     category_id: Optional[int] = Field(default=None, foreign_key="category.id")
+
+    
     
 
 class Post(PostBase, table=True):
@@ -49,7 +52,9 @@ class Post(PostBase, table=True):
         back_populates="post",
     )
     tags: List[Tag] = Relationship(back_populates="posts", link_model=PostTagLink)
-    
+    # Post.users ----> User.id
+    # Это таблица UserPostLink
+    userpostlink_users: List[User] = Relationship(back_populates="userpostlink_posts", link_model=UserPostLink)
 
 
 

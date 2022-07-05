@@ -5,5 +5,7 @@ __pycache__
 */*/__pycache__/
 /app/settings.py
 base.txt
+test_and_seed.py
 seed.py
-/seed_services
+test.py
+/test_and_seed_data

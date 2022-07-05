@@ -64,41 +64,43 @@ def read_post(*,
 @post_router.get("/posts/", )
 def read_posts(*,
         session: Session = Depends(get_session),
+        ids: List[int] = Query(default=None),
         search: str = None,
-        tags: str = None,
+        # tags: str = None,
+        tags: List[int] = Query(default=None),
         category: int = None,
         offset: int = 0, limit: int = Query(default=100, lte=100),
         request: Request,
         # current_user: User = Depends(get_current_active_user)
     ):
 
-
     # Парсим пришедшую строку тегов 
+    # Нужна функция преобразования строки в list
     if tags:
-        print(f'Строка фильтрации тегов = {tags}')
-        tags_count = tags.count("-")+1
-        print(f'Количество тегов = {tags_count}')
-        tags_list = [] # Массив тегов для выборки
-        start = 0
-        if tags_count > 1: # Если несколько тегов
-            for number in range(tags_count):
-                if number < tags_count-1:
-                    end = tags.find('-', start)
-                    tags_list.append(tags[start:end])
-                    start = end+1
-                else:
-                    tags_list.append(tags[start:])
-        if tags_count == 1: # Если один тег
-            tags_list.append(tags)
+        # print(f'Строка фильтрации тегов = {tags}')
+        # tags_count = tags.count(",")+1
+        # print(f'Количество тегов = {tags_count}')
+        # tags_list = [] # Массив тегов для выборки
+        # start = 0
+        # if tags_count > 1: # Если несколько тегов
+        #     for number in range(tags_count):
+        #         if number < tags_count-1:
+        #             end = tags.find(',', start)
+        #             tags_list.append(tags[start:end])
+        #             start = end+1
+        #         else:
+        #             tags_list.append(tags[start:])
+        # if tags_count == 1: # Если один тег
+        #     tags_list.append(tags)
 
 
         # Формируем фильтр по тегам
         tags_filters = []
-        for tag in tags_list:
+        for tag in tags:
             print(tag)
             tags_filters.append(PostTagLink.tag_id == tag)
             print(tags_filters)
-        print(tags_list)
+        print(tags)
         
 
     # Запрос к базе данных
@@ -108,8 +110,13 @@ def read_posts(*,
         query = query.filter(or_(*tags_filters))
     if category:
         query = query.filter(Post.category_id == category)
+    if ids:
+        query = query.filter(Post.id.in_(ids))
     query = query.offset(offset).limit(limit) 
     query = query.all()
+    if ids:
+        results = sorted(query, key=lambda o: ids.index(o.id))
+        query = results
     
     
     # Добавление тегов к постам
@@ -122,48 +129,6 @@ def read_posts(*,
         post_data["category"] = post.category # Добавляем категории
         posts_list.append(post_data)
     return posts_list
-
-
-
-
-
-
-
-
-    # Всякий шлак старый - запросы в базу)))
-    # query = session.query(Post)
-    # if search:
-    #     query = query.filter(Post.title.ilike(f'%{search}%'))
-    # query = query.filter(Post.description.ilike(f'%Портфолио%'))
-    # query = query.offset(offset).limit(limit)    
-    # query = query.all()
-    # 
-    # 
-    # Парсить будем строку
-    #tags_filters = []
-    # if tags:
-    #     for tag in tags_list:
-    #         print(tag)
-    #         filters = tags_filters.append(PostTagLink.tag_id == tag)
-    #         print(tags_filters)
-    # query = query.filter(and_(*not_null_filters))
-    # query = query.filter(*tags_filters)
-    # query = query.join(PostTagLink)
-    # 
-    # query = query.filter(PostTagLink.tag_id == tag_id)
-    # query = query.filter(
-    #     or_(
-    #         PostTagLink.tag_id == tag_id, 
-    #         PostTagLink.tag_id == tag_id_2))
-    # query = query.filter(or_(PostTagLink.tag_id == 19, PostTagLink.tag_id == 16))
-    # if tags:
-    #     for tag in tags_list:
-    #         query = query.filter(PostTagLink.tag_id == tag)
-    # query = query.filter(or_(PostTagLink.tag_id == 20))
-    # if tags:
-    #     for tag in tags_list:
-    #         query = query.filter(PostTagLink.tag_id == tag)
-    # query = query.filter(PostTagLink.tag_id == 19)  
       
 
 # ---------------
